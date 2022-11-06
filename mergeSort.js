@@ -1,5 +1,3 @@
-let mixedArray = [5, 1, 6, 2, 7,33, 11, 20, 0, 3,20];
-
 const merge = (arrLeft, arrRight) => {
   let [i, j] = [0, 0];
   let returnArr = [];
@@ -26,7 +24,7 @@ const mergeSort = (arr, arrLow = 0, arrHigh = arr.length) => {
   let arrMid = Math.ceil((arrLow + arrHigh) / 2);
   let leftArr = mergeSort(arr.slice(arrLow, arrMid));
   let rightArr = mergeSort(arr.slice(arrMid));
-  console.log({ leftArr, rightArr });
+  // console.log({ leftArr, rightArr });
   return merge(leftArr, rightArr);
 };
 
