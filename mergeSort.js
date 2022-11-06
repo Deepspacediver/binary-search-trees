@@ -1,4 +1,4 @@
-let mixedArray = [5, 1, 6, 2, 7, 11, 20, 0, 3];
+let mixedArray = [5, 1, 6, 2, 7,33, 11, 20, 0, 3,20];
 
 const merge = (arrLeft, arrRight) => {
   let [i, j] = [0, 0];
@@ -30,7 +30,6 @@ const mergeSort = (arr, arrLow = 0, arrHigh = arr.length) => {
   return merge(leftArr, rightArr);
 };
 
-console.log(mergeSort(mixedArray));
-
+export default mergeSort
 /* console.log(mixedArray.slice(0,mergeSort(mixedArray)))
 console.log(mixedArray.slice(mergeSort(mixedArray))) */
