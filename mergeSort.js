@@ -28,6 +28,16 @@ const mergeSort = (arr, arrLow = 0, arrHigh = arr.length) => {
   return merge(leftArr, rightArr);
 };
 
-export default mergeSort
+
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+export {mergeSort, prettyPrint}
 /* console.log(mixedArray.slice(0,mergeSort(mixedArray)))
 console.log(mixedArray.slice(mergeSort(mixedArray))) */

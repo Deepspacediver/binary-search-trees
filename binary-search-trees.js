@@ -1,4 +1,4 @@
-import mergeSort from "./mergeSort.js";
+import {mergeSort, prettyPrint} from "./mergeSort.js";
 class Node {
   constructor(value) {
     this.value = value;
@@ -38,18 +38,49 @@ class Tree {
   }
 
   insert(valueToInsert, treeNode = this.root) {
-    if (treeNode === null) return new Node(valueToInsert);
-    
+    if (treeNode === null) {
+      return new Node(valueToInsert);
+    }
+
     if (valueToInsert < treeNode.value) {
       treeNode.left = this.insert(valueToInsert, treeNode.left);
     } else treeNode.right = this.insert(valueToInsert, treeNode.right);
-    console.log(treeNode);
     return treeNode;
+  }
+  findMin(root = this.root) {
+    let rightTree = root.right;
+    while (rightTree.left !== null) rightTree = rightTree.left;
+    console.log({ rightTree });
+    return rightTree;
+  }
+  delete(valueToDelete, root = this.root) {
+    if (valueToDelete < root.value)
+      root.left = this.delete(valueToDelete, root.left);
+    else if (valueToDelete > root.value)
+      root.right = this.delete(valueToDelete, root.right);
+    // Once valueToDelete === root.value
+    else {
+      if (root.right === null) {
+        console.log("right null", root);
+        root = root.left;
+      } else if (root.left === null) {
+        console.log("left null", root);
+        root = root.right;
+      } else {
+        root.value = this.findMin(root).value;
+        root.right = this.delete(root.value, root.right);
+      }
+    }
+    return root;
   }
 }
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const myTree = new Tree(dataArray);
 myTree.sortArray().removeDuplicates().buildTree();
-myTree.insert(0);
-myTree.insert(-1);
+console.log("before del", myTree);
+console.log(prettyPrint(myTree.root));
+myTree.delete(67);
+
 console.log(myTree);
+
+console.log(prettyPrint(myTree.root));
