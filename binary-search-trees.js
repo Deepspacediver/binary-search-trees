@@ -76,7 +76,7 @@ class Tree {
   }
   find(value, root = this.root) {
     while (root !== null) {
-      if (value === root.value) return root ;
+      if (value === root.value) return root;
       else if (value < root.value) root = root.left;
       else root = root.right;
     }
@@ -88,14 +88,31 @@ class Tree {
     if(value < root.value) return this.find(value, root.left)
     else return this.find(value, root.right) */
   }
+  levelOrder(callback, root = this.root) {
+    console.log(root);
+    let queue = [];
+    const result = [];
+    queue.push(root);
+    let firstInQ = queue[0];
+    while (queue.length !== 0) {
+      if (firstInQ.left !== null) queue.push(firstInQ.left);
+      if (firstInQ.right !== null) queue.push(firstInQ.right);
+      if (callback !== undefined) callback(firstInQ);
+      else result.push(firstInQ.value);
+      queue.shift();
+      firstInQ = queue[0];
+    }
+    return result.length !== 0 ? result : "Callback has been provided";
+  }
 }
+
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const myTree = new Tree(dataArray);
 myTree.sortArray().removeDuplicates().buildTree();
-console.log("before del", myTree);
-console.log(prettyPrint(myTree.root));
-myTree.delete(67);
-console.log(myTree.find(324));
 console.log(myTree);
 
 console.log(prettyPrint(myTree.root));
+
+console.log(myTree.levelOrder());
+
+console.log(myTree.root);
