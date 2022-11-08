@@ -1,4 +1,4 @@
-import {mergeSort, prettyPrint} from "./mergeSort.js";
+import { mergeSort, prettyPrint } from "./mergeSort.js";
 class Node {
   constructor(value) {
     this.value = value;
@@ -71,7 +71,22 @@ class Tree {
         root.right = this.delete(root.value, root.right);
       }
     }
+    console.log(root);
     return root;
+  }
+  find(value, root = this.root) {
+    while (root !== null) {
+      if (value === root.value) return root ;
+      else if (value < root.value) root = root.left;
+      else root = root.right;
+    }
+    return "No such value";
+    // Recursive method
+    /* if(root === null) return 'No such value'
+    else if(value === root.value) return root
+    
+    if(value < root.value) return this.find(value, root.left)
+    else return this.find(value, root.right) */
   }
 }
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -80,7 +95,7 @@ myTree.sortArray().removeDuplicates().buildTree();
 console.log("before del", myTree);
 console.log(prettyPrint(myTree.root));
 myTree.delete(67);
-
+console.log(myTree.find(324));
 console.log(myTree);
 
 console.log(prettyPrint(myTree.root));
