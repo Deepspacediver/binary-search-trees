@@ -104,15 +104,32 @@ class Tree {
     }
     return result.length !== 0 ? result : "Callback has been provided";
   }
+  preorder(callback, root = this.root) {
+    if (root === null) return;
+    let arr = [];
+    if (callback) {
+      callback(root);
+      this.preorder(callback, root.left);
+      this.preorder(callback, root.right);
+    } else {
+      arr = arr
+        .concat(
+          root.value,
+          this.preorder(callback, root.left),
+          this.preorder(callback, root.right)
+        )
+        .filter((a) => a !== undefined);
+    }
+    return arr;
+  }
 }
-
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const myTree = new Tree(dataArray);
 myTree.sortArray().removeDuplicates().buildTree();
 console.log(myTree);
 
 console.log(prettyPrint(myTree.root));
-
-console.log(myTree.levelOrder());
-
-console.log(myTree.root);
+console.log(myTree.preorder());
+/* console.log(myTree.preorder(function (el) {
+    console.log(el.value, el.value * 2);
+  })); */
