@@ -118,7 +118,44 @@ class Tree {
           this.preorder(callback, root.left),
           this.preorder(callback, root.right)
         )
-        .filter((a) => a !== undefined);
+        .filter((el) => el !== undefined);
+    }
+    return arr;
+  }
+  inorder(callback, root = this.root) {
+    if (root === null) return;
+    let arr = [];
+    if (callback) {
+      this.inorder(callback, root.left);
+      callback(root);
+      this.inorder(callback, root.right);
+    } else {
+      console.log(root);
+      arr = arr
+        .concat(
+          this.inorder(callback, root.left),
+          root.value,
+          this.inorder(callback, root.right)
+        )
+        .filter((el) => el !== undefined);
+    }
+    return arr;
+  }
+  postOrder(callback, root = this.root) {
+    if (root === null) return;
+    let arr = [];
+    if (callback) {
+      this.postOrder(callback, root.left),
+        this.postOrder(callback, root.right),
+        callback(root.value);
+    } else {
+      arr = arr
+        .concat(
+          this.postOrder(callback, root.left),
+          this.postOrder(callback, root.right),
+          root.value
+        )
+        .filter((el) => el !== undefined);
     }
     return arr;
   }
@@ -129,7 +166,9 @@ myTree.sortArray().removeDuplicates().buildTree();
 console.log(myTree);
 
 console.log(prettyPrint(myTree.root));
-console.log(myTree.preorder());
+//console.log(myTree.preorder());
 /* console.log(myTree.preorder(function (el) {
     console.log(el.value, el.value * 2);
   })); */
+
+console.log(myTree.postOrder());
