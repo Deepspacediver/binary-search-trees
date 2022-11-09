@@ -159,16 +159,71 @@ class Tree {
     }
     return arr;
   }
+  height(root = this.root) {
+    if (root === null) return 0;
+    let [rightHeight, leftHeight] = [0, 0];
+    if (root.right !== null) {
+      rightHeight++;
+      rightHeight += this.height(root.right);
+    }
+    if (root.left !== null) {
+      leftHeight++;
+      leftHeight += this.height(root.left);
+    }
+    console.log({ root, rightHeight, leftHeight });
+    return rightHeight > leftHeight ? rightHeight : leftHeight;
+  }
+  depth(node, root = this.root) {
+    if (node === null) return "No such value";
+    let value = node.value;
+    let depth = 0;
+    while (root.value !== value) {
+      if (value < root.value) {
+        root = root.left;
+        depth += 1;
+      } else {
+        root = root.right;
+        depth += 1;
+      }
+    }
+    return root === null ? "No such value" : depth;
+  }
+  isBalanced() {
+    let leftHeight = this.height(this.root.left);
+    let rightHeight = this.height(this.root.right);
+    if (
+      leftHeight === rightHeight ||
+      (rightHeight - leftHeight <= 1 && rightHeight - leftHeight >= 0) ||
+      (leftHeight - rightHeight <= 1 && leftHeight - rightHeight >= 0)
+    )
+      return true;
+      return false
+  }
+  rebalance() {
+    if(this.isBalanced() === true) return
+    else{
+      const arrayToBeBalanced = this.inorder()
+      this.array = arrayToBeBalanced
+      this.sortArray().removeDuplicates().buildTree()
+    }
+  }
+
 }
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const myTree = new Tree(dataArray);
 myTree.sortArray().removeDuplicates().buildTree();
 console.log(myTree);
-
+myTree.insert(6346);
+myTree.insert(6347);
 console.log(prettyPrint(myTree.root));
 //console.log(myTree.preorder());
 /* console.log(myTree.preorder(function (el) {
     console.log(el.value, el.value * 2);
   })); */
 
-console.log(myTree.postOrder());
+console.log(myTree.height());
+console.log(myTree.isBalanced());
+myTree.rebalance()
+console.log(myTree)
+console.log(prettyPrint(myTree.root));
+console.log(myTree.isBalanced())
