@@ -188,8 +188,18 @@ class Tree {
     }
     return root === null ? "No such value" : depth;
   }
-  isBalanced() {
-    let leftHeight = this.height(this.root.left);
+  isBalanced(root = this.root) {
+    if (root === null) return 0;
+    let [leftHeight, rightHeight] = [0, 0];
+    leftHeight += this.isBalanced(root.left);
+    leftHeight+=1
+    rightHeight += this.isBalanced(root.right);
+    rightHeight+=1
+    if(Math.abs(leftHeight - rightHeight) > 1) return false
+    return rightHeight > leftHeight ? rightHeight : leftHeight;
+
+
+    /* let leftHeight = this.height(this.root.left);
     let rightHeight = this.height(this.root.right);
     if (
       leftHeight === rightHeight ||
@@ -197,33 +207,31 @@ class Tree {
       (leftHeight - rightHeight <= 1 && leftHeight - rightHeight >= 0)
     )
       return true;
-      return false
+      return false */
   }
   rebalance() {
-    if(this.isBalanced() === true) return
-    else{
-      const arrayToBeBalanced = this.inorder()
-      this.array = arrayToBeBalanced
-      this.sortArray().removeDuplicates().buildTree()
+    if (this.isBalanced() === true) return;
+    else {
+      const arrayToBeBalanced = this.inorder();
+      this.array = arrayToBeBalanced;
+      this.sortArray().removeDuplicates().buildTree();
     }
   }
-
 }
 let dataArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const myTree = new Tree(dataArray);
 myTree.sortArray().removeDuplicates().buildTree();
 console.log(myTree);
-myTree.insert(6346);
-myTree.insert(6347);
+myTree.insert(6346)
 console.log(prettyPrint(myTree.root));
 //console.log(myTree.preorder());
 /* console.log(myTree.preorder(function (el) {
     console.log(el.value, el.value * 2);
   })); */
+//console.log(myTree.height());
 
-console.log(myTree.height());
 console.log(myTree.isBalanced());
-myTree.rebalance()
-console.log(myTree)
-console.log(prettyPrint(myTree.root));
-console.log(myTree.isBalanced())
+//myTree.rebalance()
+console.log(myTree);
+//console.log(prettyPrint(myTree.root));
+//console.log(myTree.isBalanced())
